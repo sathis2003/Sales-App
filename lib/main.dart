@@ -4,12 +4,15 @@ import 'package:sales/HomeScreen.dart';
 import 'package:sales/admin/adminauth_wraper_screen.dart';
 import 'package:sales/admin/adminrouter.dart';
 import 'package:sales/LoginScreen.dart';
+import 'package:sales/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }
