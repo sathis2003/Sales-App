@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 
 import 'DetailedScreen.dart';
@@ -645,11 +645,6 @@ class _CategoriesHomePageState extends State<CategoriesHomePage>
             },
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddCategoryDialog,
-        backgroundColor: Colors.teal,
-        child: const Icon(Icons.add),
       ),
     );
   }
