@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -19,6 +20,7 @@ class CategoryDetailPage extends StatefulWidget {
 
 class _CategoryDetailPageState extends State<CategoryDetailPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  User? _currentUser;
   final _formKey = GlobalKey<FormState>();
   final _businessNameController = TextEditingController();
   final _businessTypeController = TextEditingController();
@@ -43,6 +45,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
   String _defaultFilter = 'all';
   bool _isLoadingPreferences = true;
   String? _userPreferencesDocId;
+
 
   // Archive view toggle
   bool _showArchived = false;
@@ -493,9 +496,15 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
 
   // Get filtered stream based on selected filter and archive status
   Stream<QuerySnapshot> _getFilteredStream() {
+    if (_currentUser == null) {
+      // If there's no user logged in, return an empty stream.
+      return const Stream.empty();
+    }
+
     Query query = _firestore
         .collection('business_data')
         .where('categoryId', isEqualTo: widget.categoryId)
+        .where('assignedToId', isEqualTo: _currentUser!.uid) // <<< This is the crucial new filter
         .where('isArchived', isEqualTo: _showArchived);
 
     if (_selectedFilter != 'all') {
@@ -504,6 +513,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
 
     return query.orderBy('createdAt', descending: true).snapshots();
   }
+
 
   // Add business data to Firebase
   Future<void> _addBusinessData() async {
