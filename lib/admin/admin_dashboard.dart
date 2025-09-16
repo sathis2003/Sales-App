@@ -233,6 +233,20 @@ class _AdminDashboardState extends State<AdminDashboard>
                             () => Navigator.pushNamed(context, '/admin/users'),
                       ),
                       _buildActionCard(
+                        'Manage Categories',
+                        'Create and edit categories',
+                        Icons.category,
+                        Colors.orange,
+                            () => Navigator.pushNamed(context, '/admin/categories'),
+                      ),
+                      _buildActionCard( // <-- NEW CARD ADDED HERE
+                        'Lead Distribution',
+                        'Assign leads to users in bulk',
+                        Icons.hub,
+                        Colors.cyan,
+                            () => Navigator.pushNamed(context, '/admin/distribution'),
+                      ),
+                      _buildActionCard(
                         'Category Assignment',
                         'Assign categories to users',
                         Icons.assignment,
@@ -245,13 +259,6 @@ class _AdminDashboardState extends State<AdminDashboard>
                         Icons.upload_file,
                         Colors.green,
                             () => Navigator.pushNamed(context, '/admin/upload'),
-                      ),
-                      _buildActionCard(
-                        'Manage Categories',
-                        'Create and edit categories',
-                        Icons.category,
-                        Colors.orange,
-                            () => Navigator.pushNamed(context, '/admin/categories'),
                       ),
                       _buildActionCard(
                         'View All Leads',
