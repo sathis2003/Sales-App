@@ -22,6 +22,11 @@ class Lead {
   final CallStatus callStatus;
   final String leadType; // Changed from enum to String to support dynamic categories
   final Map<String, dynamic>? additionalData;
+  final String? assignedToId;
+  final String? assignedToName;
+  final String? assignedToEmail;
+  final DateTime? assignedAt;
+  final bool isArchived;
 
   Lead({
     required this.id,
@@ -35,6 +40,11 @@ class Lead {
     required this.callStatus,
     required this.leadType,
     this.additionalData,
+    this.assignedToId,
+    this.assignedToName,
+    this.assignedToEmail,
+    this.assignedAt,
+    this.isArchived = false,
   });
 
   factory Lead.fromFirestore(DocumentSnapshot doc, String categoryName) {
@@ -51,6 +61,11 @@ class Lead {
       callStatus: _parseCallStatus(data['callStatus']),
       leadType: categoryName,
       additionalData: data['additionalData'] as Map<String, dynamic>?,
+      assignedToId: data['assignedToId'],
+      assignedToName: data['assignedToName'],
+      assignedToEmail: data['assignedToEmail'],
+      assignedAt: (data['assignedAt'] as Timestamp?)?.toDate(),
+      isArchived: data['isArchived'] ?? false,
     );
   }
 
@@ -87,6 +102,11 @@ class Lead {
       'callStatus': callStatus.toString().split('.').last,
       'leadType': leadType,
       'additionalData': additionalData,
+      'assignedToId': assignedToId,
+      'assignedToName': assignedToName,
+      'assignedToEmail': assignedToEmail,
+      'assignedAt': assignedAt != null ? Timestamp.fromDate(assignedAt!) : null,
+      'isArchived': isArchived,
     };
   }
 
